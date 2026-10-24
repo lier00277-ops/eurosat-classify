@@ -98,6 +98,6 @@ uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 
 - [x] Day1 数据管道 + 探索分析
 - [x] Day2 手写 ResNet + 训练（Kaggle GPU，test 97.61%）
-- [ ] Day3 数据分析 + 错误分析
+- [x] Day3 数据分析 + 错误分析（见 `docs/数据分析报告.md`）
 - [ ] Day4 推理服务 + 文档
 - [ ] Day5 视频 + 提交

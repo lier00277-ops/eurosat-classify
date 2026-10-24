@@ -1,0 +1,40 @@
+true,pred,count,rate_in_true
+Herbaceous Vegetation,Permanent Crop,19,0.0332
+Permanent Crop,Herbaceous Vegetation,15,0.0279
+River,Annual Crop,9,0.017
+River,Highway,9,0.017
+Permanent Crop,Annual Crop,7,0.013
+Industrial Buildings,Residential Buildings,6,0.012
+Herbaceous Vegetation,Pasture,5,0.0087
+Annual Crop,Forest,4,0.0067
+Annual Crop,Pasture,4,0.0067
+Industrial Buildings,Highway,4,0.008
+Pasture,Herbaceous Vegetation,4,0.0101
+Pasture,Forest,3,0.0076
+Permanent Crop,Pasture,3,0.0056
+SeaLake,River,3,0.0049
+Annual Crop,Herbaceous Vegetation,2,0.0034
+Annual Crop,Permanent Crop,2,0.0034
+Annual Crop,SeaLake,2,0.0034
+Forest,SeaLake,2,0.0033
+Herbaceous Vegetation,Annual Crop,2,0.0035
+Highway,Annual Crop,2,0.004
+Highway,Herbaceous Vegetation,2,0.004
+Highway,Industrial Buildings,2,0.004
+Pasture,Annual Crop,2,0.0051
+Annual Crop,River,1,0.0017
+Forest,Pasture,1,0.0016
+Herbaceous Vegetation,Residential Buildings,1,0.0017
+Industrial Buildings,Permanent Crop,1,0.002
+Industrial Buildings,River,1,0.002
+Pasture,Permanent Crop,1,0.0025
+Pasture,River,1,0.0025
+Permanent Crop,Industrial Buildings,1,0.0019
+Residential Buildings,Industrial Buildings,1,0.0018
+River,Forest,1,0.0019
+River,Industrial Buildings,1,0.0019
+River,Pasture,1,0.0019
+River,Permanent Crop,1,0.0019
+River,SeaLake,1,0.0019
+SeaLake,Forest,1,0.0016
+SeaLake,Pasture,1,0.0016

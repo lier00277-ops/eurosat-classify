@@ -1,0 +1,66 @@
+{
+  "test_acc": 0.9761111111111112,
+  "n_test": 5400,
+  "top_confusions": [
+    [
+      "Herbaceous Vegetation",
+      "Permanent Crop",
+      19,
+      0.0332
+    ],
+    [
+      "Permanent Crop",
+      "Herbaceous Vegetation",
+      15,
+      0.0279
+    ],
+    [
+      "River",
+      "Annual Crop",
+      9,
+      0.017
+    ],
+    [
+      "River",
+      "Highway",
+      9,
+      0.017
+    ],
+    [
+      "Permanent Crop",
+      "Annual Crop",
+      7,
+      0.013
+    ],
+    [
+      "Industrial Buildings",
+      "Residential Buildings",
+      6,
+      0.012
+    ],
+    [
+      "Herbaceous Vegetation",
+      "Pasture",
+      5,
+      0.0087
+    ],
+    [
+      "Annual Crop",
+      "Forest",
+      4,
+      0.0067
+    ],
+    [
+      "Annual Crop",
+      "Pasture",
+      4,
+      0.0067
+    ],
+    [
+      "Industrial Buildings",
+      "Highway",
+      4,
+      0.008
+    ]
+  ]
+}
