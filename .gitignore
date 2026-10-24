@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+data/raw/
+data/extracted/
+*.pt
+*.pth
+*.onnx
+results/*.pt
+results/*.pth
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+hf_cache/
