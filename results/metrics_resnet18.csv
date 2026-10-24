@@ -1,0 +1,11 @@
+class_name,precision,recall,f1,support
+Annual Crop,0.9635,0.9748,0.9691,596
+Forest,0.9853,0.9951,0.9902,608
+Herbaceous Vegetation,0.9596,0.9529,0.9562,573
+Highway,0.9742,0.9879,0.981,496
+Industrial Buildings,0.9899,0.976,0.9829,501
+Pasture,0.9625,0.9722,0.9673,396
+Permanent Crop,0.9552,0.9517,0.9534,538
+Residential Buildings,0.9875,0.9982,0.9928,554
+River,0.9883,0.9565,0.9721,529
+SeaLake,0.9918,0.9918,0.9918,609

@@ -1,0 +1,76 @@
+{
+  "test_acc": 0.9761111111111112,
+  "best_val_acc": 0.9729629629629629,
+  "per_class": [
+    {
+      "class_name": "Annual Crop",
+      "precision": 0.9635,
+      "recall": 0.9748,
+      "f1": 0.9691,
+      "support": 596
+    },
+    {
+      "class_name": "Forest",
+      "precision": 0.9853,
+      "recall": 0.9951,
+      "f1": 0.9902,
+      "support": 608
+    },
+    {
+      "class_name": "Herbaceous Vegetation",
+      "precision": 0.9596,
+      "recall": 0.9529,
+      "f1": 0.9562,
+      "support": 573
+    },
+    {
+      "class_name": "Highway",
+      "precision": 0.9742,
+      "recall": 0.9879,
+      "f1": 0.981,
+      "support": 496
+    },
+    {
+      "class_name": "Industrial Buildings",
+      "precision": 0.9899,
+      "recall": 0.976,
+      "f1": 0.9829,
+      "support": 501
+    },
+    {
+      "class_name": "Pasture",
+      "precision": 0.9625,
+      "recall": 0.9722,
+      "f1": 0.9673,
+      "support": 396
+    },
+    {
+      "class_name": "Permanent Crop",
+      "precision": 0.9552,
+      "recall": 0.9517,
+      "f1": 0.9534,
+      "support": 538
+    },
+    {
+      "class_name": "Residential Buildings",
+      "precision": 0.9875,
+      "recall": 0.9982,
+      "f1": 0.9928,
+      "support": 554
+    },
+    {
+      "class_name": "River",
+      "precision": 0.9883,
+      "recall": 0.9565,
+      "f1": 0.9721,
+      "support": 529
+    },
+    {
+      "class_name": "SeaLake",
+      "precision": 0.9918,
+      "recall": 0.9918,
+      "f1": 0.9918,
+      "support": 609
+    }
+  ]
+}

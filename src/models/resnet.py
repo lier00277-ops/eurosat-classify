@@ -52,7 +52,8 @@ class ResNet(nn.Module):
     """
 
     def __init__(self, block: type[BasicBlock], layers: list[int], num_classes: int = 10,
-                 in_channels: int = 3, base_width: int = 64, stem: str = "small"):
+                 in_channels: int = 3, base_width: int = 64, stem: str = "small",
+                 strides: list[int] | None = None):
         super().__init__()
         if stem == "small":
             self.stem = nn.Sequential(
@@ -72,10 +73,15 @@ class ResNet(nn.Module):
         else:
             raise ValueError(f"unknown stem: {stem}")
 
-        self.layer1, in_channels = _make_layer(in_channels, block, base_width, layers[0], 1)
-        self.layer2, in_channels = _make_layer(in_channels, block, base_width * 2, layers[1], 2)
-        self.layer3, in_channels = _make_layer(in_channels, block, base_width * 4, layers[2], 2)
-        self.layer4, in_channels = _make_layer(in_channels, block, base_width * 8, layers[3], 2)
+        # 64x64 小图主干：4 个 stage 各下采样一次（64->32->16->8->4）；
+        # ImageNet 主干则 layer1 保持 stride 1（与官方一致）。
+        if strides is None:
+            strides = [2, 2, 2, 2] if stem == "small" else [1, 2, 2, 2]
+
+        self.layer1, in_channels = _make_layer(in_channels, block, base_width, layers[0], strides[0])
+        self.layer2, in_channels = _make_layer(in_channels, block, base_width * 2, layers[1], strides[1])
+        self.layer3, in_channels = _make_layer(in_channels, block, base_width * 4, layers[2], strides[2])
+        self.layer4, in_channels = _make_layer(in_channels, block, base_width * 8, layers[3], strides[3])
 
         self.avgpool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Linear(base_width * 8, num_classes)
