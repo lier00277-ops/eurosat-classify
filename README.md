@@ -21,12 +21,19 @@ eurosat-classify/
 └── docs/            # 项目说明与笔记
 ```
 
-## 环境
+## 环境（全部安装到 D 盘，不占 C 盘）
 
-```bash
-uv venv --python 3.12
-uv pip install -e .
+- 虚拟环境：`D:\eurosat\venv`
+- 数据集：`D:\eurosat\data`
+- 缓存（uv / pip / huggingface）：`D:\eurosat\cache`
+
+```powershell
+. .\scripts\env.ps1          # 设置缓存/数据路径并激活 D 盘 venv
+uv venv D:\eurosat\venv --python 3.12
+uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 ```
+
+运行脚本统一用 `D:\eurosat\venv\Scripts\python.exe`。
 
 ## 进度
 
