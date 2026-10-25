@@ -12,6 +12,9 @@ dependencies = [
     "pillow",
     "datasets",
     "tqdm",
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
 ]
 
 [tool.uv]

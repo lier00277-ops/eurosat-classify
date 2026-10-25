@@ -63,6 +63,34 @@ python -m scripts.integrate_kaggle
 python -m src.evaluate --tag resnet18
 ```
 
+## 推理服务（FastAPI）
+
+模型训练好后可一键起一个后端 API + 网页：
+
+```powershell
+.\scripts\run_serve.ps1
+# 浏览器打开 http://127.0.0.1:8000
+```
+
+接口：
+
+- `GET /health` → 健康检查
+- `POST /predict`（multipart，字段 `file`）→ 返回 top3 类别与置信度
+
+```bash
+curl -X POST http://127.0.0.1:8000/predict -F "file=@D:\eurosat\samples\Forest.png"
+# {"filename":"Forest.png","predicted_class":"Forest","confidence":0.99998,...}
+```
+
+命令行推理（不启服务）：
+
+```powershell
+python -m src.predict --image D:\eurosat\samples\Forest.png
+python -m src.predict --dir D:\eurosat\samples
+```
+
+样例图导出：`python scripts/export_samples.py`（写到 `D:\eurosat\samples`）。
+
 ## 目录结构
 
 ```
@@ -99,5 +127,6 @@ uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 - [x] Day1 数据管道 + 探索分析
 - [x] Day2 手写 ResNet + 训练（Kaggle GPU，test 97.61%）
 - [x] Day3 数据分析 + 错误分析（见 `docs/数据分析报告.md`）
-- [ ] Day4 推理服务 + 文档
-- [ ] Day5 视频 + 提交
+- [x] Day4 推理服务（FastAPI `/predict` + 上传页，已本地实测）
+- [ ] 验收文档 `docs/项目说明与感悟.md`
+- [ ] 演示视频 + 打包提交
