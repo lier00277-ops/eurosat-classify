@@ -91,6 +91,16 @@ python -m src.predict --dir D:\eurosat\samples
 
 样例图导出：`python scripts/export_samples.py`（写到 `D:\eurosat\samples`）。
 
+## 可解释性（Grad-CAM）
+
+用 Grad-CAM 可视化模型判断地物时关注的区域，并解释典型误判（如 River → Annual Crop 时热力图落在农田而非河流）。详见 [`docs/Grad-CAM可解释性分析.md`](docs/Grad-CAM可解释性分析.md)。
+
+![原图 vs Grad-CAM 热力图](figures/gradcam_samples.png)
+
+```powershell
+python -m src.gradcam
+```
+
 ## 目录结构
 
 ```
@@ -128,5 +138,6 @@ uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 - [x] Day2 手写 ResNet + 训练（Kaggle GPU，test 97.61%）
 - [x] Day3 数据分析 + 错误分析（见 `docs/数据分析报告.md`）
 - [x] Day4 推理服务（FastAPI `/predict` + 上传页，已本地实测）
+- [x] 加分项：Grad-CAM 可解释性（见 `docs/Grad-CAM可解释性分析.md`）
 - [ ] 验收文档 `docs/项目说明与感悟.md`
 - [ ] 演示视频 + 打包提交

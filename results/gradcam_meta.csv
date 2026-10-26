@@ -1,0 +1,5 @@
+sample,correct,true_class,pred_class,confidence,row_id
+Forest,True,Forest,Forest,0.9999938011169434,22196
+River,False,River,Annual Crop,0.6225873231887817,25862
+Residential Buildings,True,Residential Buildings,Residential Buildings,0.99998939037323,25308
+Permanent Crop,False,Permanent Crop,Pasture,0.5118681788444519,24778
