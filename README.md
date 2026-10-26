@@ -101,6 +101,24 @@ python -m src.predict --dir D:\eurosat\samples
 python -m src.gradcam
 ```
 
+## 迁移学习对照实验
+
+同一任务上对比三种方案（详见 [`docs/迁移学习对照实验.md`](docs/迁移学习对照实验.md)）：
+
+| 方案 | 测试准确率 | 训练 epoch |
+|---|---|---|
+| 从零手写 ResNet18 | **97.61%** | 30 |
+| 预训练 ResNet18 全量微调 | 97.06% | **8** |
+| 预训练冻结 + 线性头 | 91.46% | 60（线性层） |
+
+![迁移学习对比](figures/transfer_compare.png)
+
+结论：预训练微调收敛更快（8 epoch 就到 ~97%），但在 64×64 小图上，从零训练 + 领域适配结构可以追平甚至略超预训练迁移；冻结特征 + 线性头则明显不够。
+
+```powershell
+python -m src.transfer --img-size 64 --epochs 8
+```
+
 ## 目录结构
 
 ```
@@ -139,5 +157,6 @@ uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 - [x] Day3 数据分析 + 错误分析（见 `docs/数据分析报告.md`）
 - [x] Day4 推理服务（FastAPI `/predict` + 上传页，已本地实测）
 - [x] 加分项：Grad-CAM 可解释性（见 `docs/Grad-CAM可解释性分析.md`）
+- [x] 加分项：迁移学习对照实验（见 `docs/迁移学习对照实验.md`）
 - [ ] 验收文档 `docs/项目说明与感悟.md`
 - [ ] 演示视频 + 打包提交

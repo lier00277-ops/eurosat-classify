@@ -1,0 +1,31 @@
+[
+  {
+    "name": "从零手写 ResNet18",
+    "test_acc": 0.9761,
+    "best_val_acc": 0.973,
+    "epochs": 30,
+    "params": 11178186,
+    "train_time_s": 565,
+    "device": "Kaggle T4"
+  },
+  {
+    "name": "预训练冻结 + 线性头",
+    "test_acc": 0.9146296381950378,
+    "best_val_acc": 0.9096296429634094,
+    "epochs": 60,
+    "train_time_s": 79.77356004714966,
+    "img_size": 64,
+    "params": 11181642,
+    "device": "CPU"
+  },
+  {
+    "name": "预训练全量微调",
+    "test_acc": 0.9705555555555555,
+    "best_val_acc": 0.9688888888888889,
+    "epochs": 8,
+    "train_time_s": 1451.1351788043976,
+    "img_size": 64,
+    "params": 11181642,
+    "device": "CPU"
+  }
+]
