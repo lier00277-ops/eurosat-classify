@@ -1,4 +1,4 @@
-"""FastAPI 推理服务。启动：uvicorn src.serve:app --port 8000"""
+"""FastAPI 推理服务。启动：uvicorn src.serve:app --port 8001"""
 from __future__ import annotations
 
 import io

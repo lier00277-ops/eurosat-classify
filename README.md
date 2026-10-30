@@ -82,7 +82,7 @@ python -m src.evaluate --tag resnet18
 .\scripts\run_serve.ps1
 ```
 
-浏览器打开 http://127.0.0.1:8000，上传图片返回类别和置信度。
+浏览器打开 http://127.0.0.1:8001，上传图片返回类别和置信度。
 
 也可以直接用命令行：
 
