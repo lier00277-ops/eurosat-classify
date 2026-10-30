@@ -1,13 +1,4 @@
-"""下载 EuroSAT RGB 并导出为 npz + 元数据 CSV + 类别表。
-
-用法（在项目根目录）：
-    python -m src.data.download
-
-产物（默认写到 D:\\eurosat\\data，可用 EUROSAT_DATA 覆盖）：
-    eurosat_rgb.npz   X:(N,64,64,3) uint8, y:(N,) int16, split_idx:(N,) int8
-    metadata.csv      每张图的类别/亮度/尺寸等统计
-    classes.json      类别名与划分名
-"""
+"""下载 EuroSAT RGB，导出为 npz、metadata.csv 和 classes.json。"""
 from __future__ import annotations
 
 import json

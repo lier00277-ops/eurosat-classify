@@ -1,19 +1,4 @@
-"""迁移学习对照实验：同一 EuroSAT 测试集上比较三种方案。
-
-A) 从零手写 ResNet18（已有结果，test 97.61%）
-B) ImageNet 预训练 ResNet18，冻结主干 + 线性分类头（linear probe）
-C) ImageNet 预训练 ResNet18，全量微调
-
-用法（项目根目录）：
-    python -m src.transfer                    # 默认 img_size=64, epochs=8
-    python -m src.transfer --img-size 128 --epochs 8
-
-产物：
-    results/transfer_results.json   三组方案结果
-    results/transfer_log.csv        微调训练日志
-    figures/transfer_compare.png    三方案对比柱状图
-    figures/transfer_curves.png     微调训练曲线
-"""
+"""迁移学习对比：手写模型 vs 预训练 ResNet18（冻结线性头 / 全量微调）。"""
 from __future__ import annotations
 
 import argparse

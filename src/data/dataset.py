@@ -1,4 +1,4 @@
-"""内存版 EuroSAT Dataset：整个数据集预加载进 RAM，训练时只做轻量增强。"""
+"""EuroSAT Dataset，数据预先读进内存。"""
 from __future__ import annotations
 
 import numpy as np
@@ -7,10 +7,7 @@ from torch.utils.data import Dataset
 
 
 class EuroSATDataset(Dataset):
-    """X: (N,64,64,3) uint8 全量数组；indices 指定当前 split。
-
-    数据量只有 ~265MB，整个数组常驻内存，避免每个 batch 读盘/解码。
-    """
+    """X 是 (N,64,64,3) uint8 全量数组，indices 是当前 split 的下标。"""
 
     def __init__(self, X: np.ndarray, y: np.ndarray, indices: np.ndarray, mean, std, train: bool = False):
         self.X = X

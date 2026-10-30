@@ -1,13 +1,4 @@
-"""FastAPI 推理服务：上传卫星/航拍图片 -> 返回 10 类地物中最可能的类别与置信度。
-
-启动：
-    D:\\eurosat\\venv\\Scripts\\python.exe -m uvicorn src.serve:app --host 127.0.0.1 --port 8000
-然后浏览器打开 http://127.0.0.1:8000
-
-接口：
-    GET  /health   健康检查
-    POST /predict  multipart 上传 file 字段，返回 top3 类别
-"""
+"""FastAPI 推理服务。启动：uvicorn src.serve:app --port 8000"""
 from __future__ import annotations
 
 import io
@@ -20,7 +11,7 @@ from src.infer import load_model, predict_pil
 
 app = FastAPI(title="EuroSAT 地物分类服务", version="1.0")
 
-# 启动时加载一次模型（~45MB，几秒内完成）
+# 启动时加载模型
 MODEL, CLASSES, MEAN, STD, DEVICE = load_model()
 print(f"[serve] model loaded: {len(CLASSES)} classes on {DEVICE}")
 

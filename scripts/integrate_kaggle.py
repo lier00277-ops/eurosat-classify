@@ -1,15 +1,4 @@
-"""把 Kaggle 产出的 checkpoint 转成项目统一模型结构，并校验精度可复现。
-
-背景：Kaggle 单单元格脚本里 ResNet 用 self.body = nn.Sequential(*blocks)；
-项目里的 ResNet 用 layer1~layer4。这里做 key 重映射：
-    body.0/1 -> layer1.0/1
-    body.2/3 -> layer2.0/1
-    body.4/5 -> layer3.0/1
-    body.6/7 -> layer4.0/1
-
-用法：
-    python -m scripts.integrate_kaggle
-"""
+"""把 Kaggle 的 checkpoint（body.N 命名）转成项目模型结构（layer1~4），并验证精度一致。"""
 from __future__ import annotations
 
 import json

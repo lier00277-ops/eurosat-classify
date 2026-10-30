@@ -1,15 +1,4 @@
-"""手写 ResNet18 训练脚本（EuroSAT，CPU 可跑）。
-
-用法（在项目根目录）：
-    python -m src.train --epochs 10 --batch-size 128
-    python -m src.train --smoke          # 小样本过拟合自检，验证代码正确性
-
-产物（默认 D:\\eurosat\\results，可用 EUROSAT_RESULTS 覆盖）：
-    {tag}_best.pt        验证集最优权重
-    log_{tag}.csv        每个 epoch 的训练日志
-    summary_{tag}.json   训练总结
-    figures/train_curves_{tag}.png
-"""
+"""训练脚本。python -m src.train [--epochs N] [--smoke]"""
 from __future__ import annotations
 
 import argparse

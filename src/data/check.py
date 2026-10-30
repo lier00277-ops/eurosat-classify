@@ -1,8 +1,4 @@
-"""数据完整性检查 + 类别分布统计。
-
-用法：
-    python -m src.data.check
-"""
+"""检查数据完整性，统计类别分布。"""
 from __future__ import annotations
 
 import json

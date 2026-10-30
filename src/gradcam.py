@@ -1,17 +1,4 @@
-"""Grad-CAM 可解释性：可视化模型判断地物类别时关注的区域。
-
-原理：取最后一层卷积（layer4）的特征图，对目标类别分数求梯度，
-      用梯度的全局平均作为权重对特征图加权求和，ReLU 后归一化成热力图。
-
-用法（在项目根目录）：
-    python -m src.gradcam
-
-产物：
-    figures/gradcam_per_class.png   每类一个正确样本的热力图
-    figures/gradcam_errors.png      高置信度错分样本的热力图
-    figures/gradcam_samples.png     原图 vs 热力图（代表样本）
-    results/gradcam_meta.csv        生成的样本清单
-"""
+"""Grad-CAM：看模型判断类别时关注图片的哪个区域。python -m src.gradcam"""
 from __future__ import annotations
 
 import os

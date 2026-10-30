@@ -1,8 +1,4 @@
-"""校验手写 ResNet18 的结构正确性：
-1. 参数量与 torchvision 官方 resnet18 对齐（仅 stem 不同）。
-2. 前向输出形状正确。
-3. 每个 BasicBlock 参数与官方一致。
-"""
+"""对比 torchvision resnet18，检查结构、参数量和输出形状。"""
 from __future__ import annotations
 
 import torch

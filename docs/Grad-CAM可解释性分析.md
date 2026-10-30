@@ -1,6 +1,6 @@
 # Grad-CAM 可解释性分析
 
-> 对应项目：[EuroSAT 遥感地物分类](../README.md)
+> 项目：[EuroSAT 遥感地物分类](../README.md)
 > 模型：手写 ResNet18（测试集准确率 97.61%）
 
 ## 1. 这是什么
@@ -41,7 +41,7 @@ Grad-CAM（Gradient-weighted Class Activation Mapping）用来回答一个问题
 
 ## 5. 局限与可改进点
 
-- 我们的网络经过 4 个 stride-2 stage，`layer4` 特征图只有 **4×4**，所以热力图比较粗（上采样到 64×64 后偏“块状”）。
+- 网络经过 4 个 stride-2 stage，`layer4` 特征图只有 **4×4**，所以热力图比较粗（上采样到 64×64 后偏“块状”）。
 - 想要更精细的定位，可以把 Grad-CAM 的目标层换成 `layer3`（8×8）或 `layer2`（16×16），代价是语义性稍弱。
 - 另一个改进方向是 Grad-CAM++ / Score-CAM，能更稳定地定位小目标（如河流）。
 

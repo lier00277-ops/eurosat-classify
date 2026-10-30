@@ -1,4 +1,4 @@
-"""从 transfer_results.json / transfer_log.csv 重新生成迁移学习对比图（含中文字体）。"""
+"""重新生成迁移学习对比图。"""
 from __future__ import annotations
 
 import json

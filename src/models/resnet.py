@@ -1,4 +1,4 @@
-"""手写 ResNet（BasicBlock + ResNet18/34），针对 64x64 小图做了主干适配。"""
+"""ResNet18/34，输入按 64x64 调整过。"""
 from __future__ import annotations
 
 import torch
@@ -6,7 +6,7 @@ import torch.nn as nn
 
 
 class BasicBlock(nn.Module):
-    """标准残差块：两层 3x3 卷积 + 跳跃连接。"""
+    """残差块。"""
 
     expansion = 1
 
@@ -20,7 +20,6 @@ class BasicBlock(nn.Module):
 
         self.downsample: nn.Module | None = None
         if stride != 1 or in_channels != out_channels:
-            # 维度匹配：用 1x1 卷积把捷径分支的通道数/空间尺寸对齐
             self.downsample = nn.Sequential(
                 nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(out_channels),
@@ -45,11 +44,7 @@ def _make_layer(in_channels: int, block: type[BasicBlock], out_channels: int, bl
 
 
 class ResNet(nn.Module):
-    """可配置的 ResNet。
-
-    stem="small": 3x3 stride1 卷积（不接 maxpool），适合 64x64 小图，保留空间细节。
-    stem="imagenet": 7x7 stride2 + maxpool，与经典 ImageNet 版一致（小图会降得太狠）。
-    """
+    """ResNet 主体，stem 可选 small 或 imagenet。"""
 
     def __init__(self, block: type[BasicBlock], layers: list[int], num_classes: int = 10,
                  in_channels: int = 3, base_width: int = 64, stem: str = "small",
@@ -73,8 +68,6 @@ class ResNet(nn.Module):
         else:
             raise ValueError(f"unknown stem: {stem}")
 
-        # 64x64 小图主干：4 个 stage 各下采样一次（64->32->16->8->4）；
-        # ImageNet 主干则 layer1 保持 stride 1（与官方一致）。
         if strides is None:
             strides = [2, 2, 2, 2] if stem == "small" else [1, 2, 2, 2]
 

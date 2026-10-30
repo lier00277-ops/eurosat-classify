@@ -1,8 +1,4 @@
-"""在 test 集上评估模型：准确率、每类 P/R/F1、混淆矩阵。
-
-用法：
-    python -m src.evaluate --tag resnet18
-"""
+"""测试集评估：准确率、每类 P/R/F1、混淆矩阵。"""
 from __future__ import annotations
 
 import argparse

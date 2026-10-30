@@ -1,4 +1,4 @@
-"""推理核心：加载模型、预处理、预测。被 predict.py 和 serve.py 复用。"""
+"""模型加载、图片预处理和预测。"""
 from __future__ import annotations
 
 import os
@@ -15,7 +15,7 @@ IMG_SIZE = 64
 
 
 def load_model(ckpt_path: str | None = None, device: str = "cpu"):
-    """加载统一结构的 checkpoint，返回 (model, classes, mean, std, device)。"""
+    """加载 checkpoint，返回 model/classes/mean/std/device。"""
     ckpt_path = Path(ckpt_path) if ckpt_path else RESULTS / "resnet18_best.pt"
     if not ckpt_path.exists():
         raise FileNotFoundError(f"找不到权重: {ckpt_path}")
@@ -28,7 +28,7 @@ def load_model(ckpt_path: str | None = None, device: str = "cpu"):
 
 
 def preprocess(img: Image.Image, mean, std) -> torch.Tensor:
-    """任意尺寸图片 -> (1,3,64,64) 归一化张量。"""
+    """缩放并归一化到 (1, 3, 64, 64)。"""
     img = ImageOps.exif_transpose(img).convert("RGB").resize((IMG_SIZE, IMG_SIZE), Image.BILINEAR)
     x = np.asarray(img, dtype=np.float32) / 255.0
     m = np.asarray(mean, dtype=np.float32).reshape(1, 1, 3)
@@ -39,7 +39,7 @@ def preprocess(img: Image.Image, mean, std) -> torch.Tensor:
 
 @torch.no_grad()
 def predict_pil(img: Image.Image, model, classes, mean, std, device="cpu", topk: int = 3):
-    """对 PIL 图片预测，返回 topk 列表 [{class, confidence}]。"""
+    """返回 top-k 类别和置信度。"""
     x = preprocess(img, mean, std).to(device)
     prob = torch.softmax(model(x), dim=1)[0].cpu().numpy()
     order = prob.argsort()[::-1][:topk]

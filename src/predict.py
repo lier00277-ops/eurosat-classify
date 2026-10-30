@@ -1,9 +1,4 @@
-"""命令行推理：单张图片或整个文件夹。
-
-用法：
-    python -m src.predict --image path/to/img.png
-    python -m src.predict --dir D:\\eurosat\\samples
-"""
+"""命令行推理：--image 单张，--dir 文件夹。"""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +15,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--image", type=str, default=None, help="单张图片路径")
     ap.add_argument("--dir", type=str, default=None, help="图片文件夹")
-    ap.add_argument("--ckpt", type=str, default=None, help="checkpoint 路径（默认 D:\\eurosat\\results\\resnet18_best.pt）")
+    ap.add_argument("--ckpt", type=str, default=None, help="checkpoint 路径")
     ap.add_argument("--device", default="cpu")
     args = ap.parse_args()
 

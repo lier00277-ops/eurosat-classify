@@ -1,5 +1,5 @@
-# 把本项目相关的“安装物/缓存/数据”全部指向 D 盘，避免占用 C 盘。
-# 用法：在 PowerShell 中执行  . .\scripts\env.ps1   （注意前面有个点，表示“点源”到当前会话）
+# 环境变量：缓存、数据、虚拟环境都放在 D 盘。
+# 使用：. .\scripts\env.ps1
 
 $env:UV_INDEX_URL   = "https://pypi.tuna.tsinghua.edu.cn/simple"
 $env:UV_CACHE_DIR   = "D:\eurosat\cache\uv"

@@ -1,9 +1,4 @@
-"""数据探索可视化：类别分布、样本网格、亮度分布。
-
-用法（在项目根目录）：
-    python -m src.data.figures
-产物保存到 figures/
-"""
+"""画类别分布、样本网格、亮度分布图。"""
 from __future__ import annotations
 
 import json

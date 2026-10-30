@@ -1,18 +1,4 @@
-"""测试集数据分析 + 错误分析。
-
-产出：
-    results/analyze_metrics.csv        每类 P/R/F1（按样本数排序）
-    results/analyze_predictions.csv    每个测试样本的预测明细
-    results/analyze_top_confusions.csv 最常混淆的类别对
-    figures/confusion_matrix_analysis.png  行归一化混淆矩阵
-    figures/per_class_f1.png           每类 F1 条形图
-    figures/misclassified_samples.png  高置信度错分样本
-    figures/class_imbalance_vs_recall.png  类别样本量 vs 召回率
-    figures/top_confusions.png         最易混淆类别对
-
-用法：
-    python -m src.analyze
-"""
+"""测试集分析和错误分析。python -m src.analyze"""
 from __future__ import annotations
 
 import json

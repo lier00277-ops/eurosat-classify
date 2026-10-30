@@ -1,162 +1,106 @@
-# EuroSAT 遥感地物分类 · 手写 ResNet
+# EuroSAT 遥感地物分类
 
-第一阶段考核项目：用**手写 ResNet18**（从零训练、无预训练权重）对 EuroSAT 卫星影像做 10 类地物分类，并在同一项目中完成数据清洗、统计分析与结果可视化。
+用 PyTorch 从零手写 ResNet18，对 EuroSAT 卫星影像做 10 类地物分类。测试集准确率 97.61%。
+
+## 数据
+
+EuroSAT RGB，共 27000 张 64×64 彩色图像，10 类（农田、森林、河流、住宅区、工业区等）。训练集 16200 张、验证集 5400 张、测试集 5400 张，按类别分层划分，各类别样本量 2000～3000。
+
+## 方法
+
+- 模型：自己实现的 BasicBlock 和 ResNet18，约 11.18M 参数。
+- 适配小图：输入只有 64×64，主干改成 3×3 stride1 卷积，四个 stage 各下采样一次，最后特征图 4×4。
+- 训练：SGD + OneCycleLR，交叉熵损失，30 epoch，Kaggle 免费 T4。
+- 增强：随机水平/垂直翻转。
+- 归一化用的均值和标准差从训练集统计得到。
 
 ## 结果
 
-| 指标 | 值 |
-|---|---|
-| **测试集准确率** | **97.61%** |
-| 最佳验证集准确率 | 97.30% |
-| 训练集准确率（最后一轮） | 99.83% |
-| 模型参数量 | 11.18 M |
-| 训练设备 | Kaggle 免费 GPU（T4） |
-| 训练耗时 | 约 9.4 分钟（30 epoch） |
+测试集 97.61%，验证集最高 97.30%。
 
 ![训练曲线](figures/train_curves_resnet18.png)
 
 ![混淆矩阵](figures/confusion_matrix_resnet18.png)
 
-各类别 P/R/F1 见 [`results/metrics_resnet18.csv`](results/metrics_resnet18.csv)。最弱的是 **Permanent Crop（F1 0.953）** 与 **Herbaceous Vegetation（F1 0.956）**，主要是几类植被（Herbaceous / Permanent Crop / Pasture）颜色纹理相近、易互相混淆。
+各类别 P/R/F1 在 `results/metrics_resnet18.csv`。最低的是 Permanent Crop（F1 0.953）和 Herbaceous Vegetation（0.956），这两类和 Pasture 颜色纹理接近，容易混。
 
-## 数据集
+## 分析
 
-EuroSAT RGB：10 类地物、27,000 张 64×64 图像（train 16200 / val 5400 / test 5400）。
+- `docs/数据分析报告.md`：类别分布、混淆对、错分样本
+- `docs/Grad-CAM可解释性分析.md`：Grad-CAM 热力图，看模型关注哪里
+- `docs/迁移学习对照实验.md`：手写模型和预训练 ResNet18 的对比
 
-类别分布不均衡（2000～3000，max/min = 1.5），Pasture 最少。详见 [`figures/class_distribution.png`](figures/class_distribution.png) 与 `D:\eurosat\data\metadata.csv`。
+迁移学习对比结果：
 
-## 模型设计（手写 ResNet18）
+| 方案 | 测试准确率 | epoch |
+|---|---|---|
+| 手写 ResNet18 | 97.61% | 30 |
+| 预训练微调 | 97.06% | 8 |
+| 预训练冻结 + 线性头 | 91.46% | 60 |
 
-为适配 64×64 小图，对标准 ResNet18 做了两处有意调整：
-
-- **stem 用 3×3 stride1**（官方为 7×7 stride2），保留更多空间细节 → 少 7,680 参数
-- **4 个 stage 均下采样**（layer1 也 stride2），特征图 `64→32→16→8→4` → 多 4,224 参数
-
-与官方 ResNet18 净差 3,456 参数，其余 BasicBlock 逐层一致，`scripts/verify_model.py` 会自动校验：
+## 目录
 
 ```
-stem -> (2, 64, 64, 64)
-layer1 -> (2, 64, 32, 32)
-layer2 -> (2, 128, 16, 16)
-layer3 -> (2, 256, 8, 8)
-layer4 -> (2, 512, 4, 4)
+eurosat-classify/
+├── src/
+│   ├── data/           # 数据下载、划分、检查、画图
+│   ├── models/         # BasicBlock 和 ResNet
+│   ├── train.py        # 训练
+│   ├── evaluate.py     # 测试集评估
+│   ├── analyze.py      # 分析与错误分析
+│   ├── gradcam.py      # Grad-CAM
+│   ├── transfer.py     # 迁移学习对比
+│   ├── infer.py        # 推理
+│   ├── predict.py      # 命令行推理
+│   └── serve.py        # FastAPI 服务
+├── kaggle/kaggle_train.py  # Kaggle 上训练用的脚本
+├── scripts/            # 辅助脚本
+├── figures/            # 图
+├── results/            # 指标、日志
+└── docs/               # 文档
 ```
 
-关键代码：[`src/models/resnet.py`](src/models/resnet.py)（`BasicBlock` + `ResNet`）。
-
-## 复现流程
+## 运行
 
 ```powershell
-# 1) 数据下载 + 分层划分 + 完整性检查 + 探索图
+# 准备数据
 python -m src.data.download
 python -m src.data.split
 python -m src.data.check
 python -m src.data.figures
 
-# 2) 训练：在 Kaggle GPU 上运行 kaggle/kaggle_train.py（自包含单单元格）
+# 训练（本地 CPU 可用；完整训练在 Kaggle 上跑 kaggle/kaggle_train.py）
+python -m src.train
 
-# 3) 把 Kaggle 产物放到 D:\eurosat\kaggle_output，转成统一 checkpoint 并做复现校验
-python -m scripts.integrate_kaggle
-# -> local re-eval acc = 0.9761（与 Kaggle 一致）
-
-# 4) 本地评估
+# 评估
 python -m src.evaluate --tag resnet18
 ```
 
-## 推理服务（FastAPI）
-
-模型训练好后可一键起一个后端 API + 网页：
+推理服务：
 
 ```powershell
 .\scripts\run_serve.ps1
-# 浏览器打开 http://127.0.0.1:8000
 ```
 
-接口：
+浏览器打开 http://127.0.0.1:8000，上传图片返回类别和置信度。
 
-- `GET /health` → 健康检查
-- `POST /predict`（multipart，字段 `file`）→ 返回 top3 类别与置信度
-
-```bash
-curl -X POST http://127.0.0.1:8000/predict -F "file=@D:\eurosat\samples\Forest.png"
-# {"filename":"Forest.png","predicted_class":"Forest","confidence":0.99998,...}
-```
-
-命令行推理（不启服务）：
+也可以直接用命令行：
 
 ```powershell
-python -m src.predict --image D:\eurosat\samples\Forest.png
-python -m src.predict --dir D:\eurosat\samples
+python -m src.predict --image path/to/image.png
 ```
 
-样例图导出：`python scripts/export_samples.py`（写到 `D:\eurosat\samples`）。
+## 环境
 
-## 可解释性（Grad-CAM）
+虚拟环境、数据和缓存都放在 D 盘：
 
-用 Grad-CAM 可视化模型判断地物时关注的区域，并解释典型误判（如 River → Annual Crop 时热力图落在农田而非河流）。详见 [`docs/Grad-CAM可解释性分析.md`](docs/Grad-CAM可解释性分析.md)。
-
-![原图 vs Grad-CAM 热力图](figures/gradcam_samples.png)
-
-```powershell
-python -m src.gradcam
-```
-
-## 迁移学习对照实验
-
-同一任务上对比三种方案（详见 [`docs/迁移学习对照实验.md`](docs/迁移学习对照实验.md)）：
-
-| 方案 | 测试准确率 | 训练 epoch |
-|---|---|---|
-| 从零手写 ResNet18 | **97.61%** | 30 |
-| 预训练 ResNet18 全量微调 | 97.06% | **8** |
-| 预训练冻结 + 线性头 | 91.46% | 60（线性层） |
-
-![迁移学习对比](figures/transfer_compare.png)
-
-结论：预训练微调收敛更快（8 epoch 就到 ~97%），但在 64×64 小图上，从零训练 + 领域适配结构可以追平甚至略超预训练迁移；冻结特征 + 线性头则明显不够。
-
-```powershell
-python -m src.transfer --img-size 64 --epochs 8
-```
-
-## 目录结构
-
-```
-eurosat-classify/
-├── data/                 # 数据说明（大文件在 D:\eurosat\data）
-├── src/
-│   ├── data/             # 下载 / 清洗 / 分层划分 / 检查 / 可视化
-│   ├── models/           # 手写 BasicBlock + ResNet
-│   ├── train.py          # 本地 CPU 训练脚本
-│   └── evaluate.py       # 测试集评估
-├── kaggle/kaggle_train.py  # Kaggle GPU 单单元格训练脚本
-├── scripts/              # 结构校验 / checkpoint 集成
-├── figures/              # 图表输出
-├── results/              # 指标、日志（权重在 D 盘，不入库）
-├── docs/                 # 项目说明与分析报告
-└── notebooks/            # 探索分析
-```
-
-## 环境（全部安装到 D 盘，不占 C 盘）
-
-- 虚拟环境：`D:\eurosat\venv`
-- 数据集：`D:\eurosat\data`
-- 缓存（uv / pip / huggingface）：`D:\eurosat\cache`
-- 训练权重：`D:\eurosat\results\resnet18_best.pt`
+- `D:\eurosat\venv`：虚拟环境
+- `D:\eurosat\data`：数据
+- `D:\eurosat\cache`：缓存
+- `D:\eurosat\results\resnet18_best.pt`：训练好的权重（没放进仓库）
 
 ```powershell
 . .\scripts\env.ps1
 uv venv D:\eurosat\venv --python 3.12
 uv pip install --python D:\eurosat\venv\Scripts\python.exe -e .
 ```
-
-## 进度
-
-- [x] Day1 数据管道 + 探索分析
-- [x] Day2 手写 ResNet + 训练（Kaggle GPU，test 97.61%）
-- [x] Day3 数据分析 + 错误分析（见 `docs/数据分析报告.md`）
-- [x] Day4 推理服务（FastAPI `/predict` + 上传页，已本地实测）
-- [x] 加分项：Grad-CAM 可解释性（见 `docs/Grad-CAM可解释性分析.md`）
-- [x] 加分项：迁移学习对照实验（见 `docs/迁移学习对照实验.md`）
-- [ ] 验收文档 `docs/项目说明与感悟.md`
-- [ ] 演示视频 + 打包提交

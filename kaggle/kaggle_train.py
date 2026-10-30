@@ -1,8 +1,5 @@
-# =============================================================================
-# 手写 ResNet18 训练 EuroSAT（Kaggle GPU 版，单单元格自包含）
-# 若右侧 Internet 已开启且未上传 npz：自动从 HuggingFace 下载数据
-# 若已上传 eurosat_rgb.npz 为 Kaggle Dataset：自动读取，无需联网
-# =============================================================================
+# 手写 ResNet18 训练 EuroSAT（Kaggle 单单元格脚本）
+# 没有上传 npz 时从 HuggingFace 下载数据；已上传则直接读取。
 import os, json, time, random
 import numpy as np
 import torch

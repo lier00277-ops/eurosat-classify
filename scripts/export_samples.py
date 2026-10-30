@@ -1,9 +1,4 @@
-"""导出每类一张样例图（4x 放大到 256x256），用于推理服务测试与视频演示。
-
-用法：
-    python scripts/export_samples.py
-产物默认写到 D:\\eurosat\\samples
-"""
+"""导出每类一张样例图，放大到 256x256，用来测试推理服务。"""
 from __future__ import annotations
 
 import json

@@ -1,8 +1,4 @@
-"""按类别做分层划分 train/val/test（60/20/20），保存到 data/splits/。
-
-用法：
-    python -m src.data.split
-"""
+"""按类别分层划分 train/val/test（60/20/20），结果存到 data/splits/。"""
 from __future__ import annotations
 
 import os

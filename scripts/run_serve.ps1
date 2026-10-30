@@ -1,5 +1,4 @@
-# 启动 EuroSAT 推理服务（浏览器打开 http://127.0.0.1:8000）
-# 用法：在项目根目录执行  .\scripts\run_serve.ps1
+# 启动推理服务，浏览器打开 http://127.0.0.1:8000
 $PSScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location (Join-Path $PSScriptRoot "..")
 $env:EUROSAT_RESULTS = "D:\eurosat\results"
